@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#101425" />
+    <meta
+      name="description"
+      content="Two pilots. One neon maze. A real-time online race where every flap counts."
+    />
+    <title>Flappy Maze Race V3 — Hard mode. Small wings.</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%23b7f36b'/%3E%3Cpath d='M16 39Q18 15 39 20L48 31 39 43Z' fill='%23101425'/%3E%3Ccircle cx='37' cy='27' r='4' fill='white'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/engine.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient"></div>
+    <header>
+      <a class="brand" href="/" aria-label="Flappy Maze Race home"
+        ><span class="brandmark">↗</span> FLAPPY<span class="brandlight">
+          / MAZE RACE</span
+        ></a
+      >
+      <div class="headerRight">
+        <span id="connection" class="connection">● Connecting</span
+        ><button
+          id="mute"
+          class="iconButton"
+          aria-label="Enable sound"
+          title="Toggle sound"
+        >
+          ♪ off
+        </button>
+      </div>
+    </header>
+    <main>
+      <section id="home" class="home screen">
+        <div class="heroCopy">
+          <div class="eyebrow"><span></span> 2–8 PLAYERS · ONE FINISH LINE</div>
+          <h1>Small wings.<br />Big <em>rivalry.</em></h1>
+          <p class="intro">
+            A little courage. A lot of flapping.<br />Race a friend through a
+            neon maze where<br class="desktop" />
+            every opening is an opportunity.
+          </p>
+          <div class="featurePills">
+            <span>↗ Real-time racing</span><span>⌁ Checkpoint saves</span
+            ><span>◉ Play anywhere</span>
+          </div>
+          <div class="playCard">
+            <label for="name">YOUR PILOT NAME</label
+            ><input
+              id="name"
+              maxlength="20"
+              placeholder="Enter your name"
+              autocomplete="nickname"
+              value="Pilot"
+            /><label for="capacity">ROOM CAPACITY</label
+            ><select id="capacity" aria-label="Room capacity">
+              <option value="2">2 players</option>
+              <option value="3" selected>3 players</option>
+              <option value="4">4 players</option>
+              <option value="5">5 players</option>
+              <option value="6">6 players</option>
+              <option value="7">7 players</option>
+              <option value="8">8 players</option>
+            </select>
+            <button id="create" class="primary">
+              Create a room <span>↗</span>
+            </button>
+            <div class="or">
+              <span></span> OR JOIN YOUR FRIEND <span></span>
+            </div>
+            <form id="joinForm">
+              <input
+                id="code"
+                aria-label="Six-character room code"
+                maxlength="6"
+                placeholder="ROOM CODE"
+                autocomplete="off"
+              /><button class="secondary" type="submit">Join race →</button>
+            </form>
+            <p class="tiny">Private room. Share a link. Settle the rivalry.</p>
+          </div>
+          <button id="how" class="textButton">ⓘ How to play</button>
+        </div>
+        <div class="heroArt">
+          <div class="artLabel">
+            <span class="liveDot"></span> THE SKY IS YOUR SHORTCUT
+          </div>
+          <canvas
+            id="heroCanvas"
+            aria-label="Original flying pilots racing through a neon canyon"
+          ></canvas>
+          <div class="artBottom">
+            <span>01 / NEON GARDENS</span><span>FLAP. DODGE. FINISH. ↗</span>
+          </div>
+          <div class="floatingBadge">
+            <span>⚑</span>
+            <div>
+              Built for friendly competition<small
+                >One button. Endless “one more”.</small
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="lobby" class="screen hidden">
+        <div class="sectionHeading">
+          <div>
+            <div class="eyebrow">YOUR NEXT GREAT RIVALRY</div>
+            <h2>Flight lounge<span>.</span></h2>
+            <p>Bring your crew. Ready up. The host starts the race.</p>
+          </div>
+          <button id="leave" class="secondary">Leave room ↗</button>
+        </div>
+        <div class="lobbyGrid">
+          <div class="lobbyMain">
+            <div class="roomBanner">
+              <div><small>ROOM CODE</small><strong id="roomCode"></strong></div>
+              <button id="copy" class="primary">Copy invite link ↗</button>
+            </div>
+            <div class="lobbyMeta">
+              <span id="playerCount"></span
+              ><button id="copyCode" class="textButton">Copy room code</button>
+            </div>
+            <div id="pilots" class="pilots"></div>
+            <form id="renameForm" class="renameForm">
+              <label for="lobbyName">YOUR CALLSIGN</label>
+              <input
+                id="lobbyName"
+                maxlength="20"
+                autocomplete="nickname"
+                aria-label="Your callsign"
+              />
+              <button class="secondary" type="submit">Update name</button>
+            </form>
+            <div class="readyPanel">
+              <p id="lobbyStatus">Waiting for your wingmate…</p>
+              <div class="readyActions">
+                <button id="ready" class="secondary">I'm ready ↗</button
+                ><button id="start" class="primary" disabled>
+                  Start race ↗
+                </button>
+              </div>
+            </div>
+          </div>
+          <aside class="briefing">
+            <div class="eyebrow" id="coursePreset">V3 / PROGRESSIVE HARD</div>
+            <h3>Neon Gardens</h3>
+            <div class="motionLegend">
+              <span>↑ ↓ Moving gate</span><span>◇ Pulsing gap</span
+              ><span>═ Moving tunnel</span>
+            </div>
+            <div class="courseMini">▥ ⌁ ▥ ⌁ ▥ ⚑</div>
+            <p id="courseBrief">
+              49 obstacles. 27 moving gates. Faster sweeps, counterflow pairs,
+              and moving tunnels—one continuous race.
+            </p>
+            <dl>
+              <div>
+                <dt>Clean flight</dt>
+                <dd>~90 sec</dd>
+              </div>
+              <div>
+                <dt>Checkpoints</dt>
+                <dd>Regular safe zones</dd>
+              </div>
+              <div>
+                <dt>Control</dt>
+                <dd>Space / click / tap</dd>
+              </div>
+            </dl>
+            <p class="tip">
+              ✦ Crashed? Take a breath. You’ll respawn at your last checkpoint.
+            </p>
+          </aside>
+        </div>
+      </section>
+      <section id="race" class="screen hidden">
+        <div class="raceTop">
+          <div>
+            <div class="eyebrow">NEON GARDENS / LIVE RACE</div>
+            <h2>Make every flap count<span>.</span></h2>
+          </div>
+          <div class="timer" id="timer">00:00.0</div>
+        </div>
+        <div class="raceMeta">
+          <span id="intensity">Easy</span><span id="raceRoster"></span
+          ><span>First finish ends the race</span>
+        </div>
+        <div
+          id="progress"
+          class="progressGrid"
+          aria-label="Live race leaderboard"
+        ></div>
+        <div class="arena">
+          <canvas
+            id="gameCanvas"
+            tabindex="0"
+            aria-label="Race course. Press Space, click or tap to flap."
+          ></canvas>
+          <div id="countdown" class="countdown hidden"></div>
+          <div id="recovery" class="recovery hidden"></div>
+          <div class="arenaHint">
+            <span>SPACE / CLICK / TAP <b>TO FLAP ↗</b></span
+            ><span id="checkpoint">CHECKPOINT 1 / 5</span>
+          </div>
+        </div>
+        <div class="raceFoot">
+          <span>✦ Follow your YOU marker. Every pilot has their own color.</span
+          ><button id="raceLeave" class="textButton">Leave race</button>
+        </div>
+      </section>
+      <section id="results" class="screen hidden">
+        <canvas id="celebration" aria-hidden="true"></canvas>
+        <div class="resultsCard">
+          <div class="eyebrow">FLIGHT COMPLETE</div>
+          <div class="trophy">⚑</div>
+          <h2 id="winner"></h2>
+          <p id="resultReason"></p>
+          <div id="resultRows"></div>
+          <button id="rematch" class="primary">Play again ↗</button>
+          <p id="rematchStatus" class="tiny">
+            Ready up, then the host starts your next race.
+          </p>
+          <button id="rematchStart" class="primary" disabled>
+            Start rematch ↗</button
+          ><button id="openLobby" class="secondary">
+            Open lobby for friends</button
+          ><button id="resultLeave" class="textButton">Back to home</button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span>FLAPPY MAZE RACE</span
+      ><span>Made for the thrill of a close finish. <b>↗</b></span
+      ><span>2–8 PILOTS · 1 FINISH LINE</span>
+    </footer>
+    <dialog id="instructions">
+      <button id="closeHow" class="dialogClose" aria-label="Close instructions">
+        ×
+      </button>
+      <div class="eyebrow">FLIGHT SCHOOL</div>
+      <h2>One button.<br />All the skill.</h2>
+      <ol>
+        <li>
+          <b>Find your wingmate.</b> Create a room and share its invitation
+          link, or enter their six-character code.
+        </li>
+        <li>
+          <b>Ready, set, flap.</b> Everyone readies up, then the host clicks
+          Start race. At least two players are required; empty seats do not
+          block starting. After the countdown, press Space, click, or tap to fly
+          upward. Gravity does the rest.
+        </li>
+        <li>
+          <b>Read the openings.</b> Stay inside the luminous gates. The same
+          seeded course awaits every player. Gaps narrow and moving gates appear
+          as you advance. Arrows show movement direction. Watch the motion rails
+          and anticipate faster late sweeps. V3 defaults to Hard difficulty.
+        </li>
+        <li>
+          <b>Keep going.</b> A crash costs 0.75 seconds and returns you to your
+          checkpoint. A brief shield helps you recover.
+        </li>
+        <li>
+          <b
+            >First across wins and ends the round for everyone. Other pilots are
+            ranked by progress.</b
+          >
+          Cross the striped finish gate to claim the race. Then run it back.
+        </li>
+      </ol>
+      <button id="gotIt" class="primary">Ready for takeoff ↗</button>
+    </dialog>
+    <div id="toast" role="status" class="toast hidden"></div>
+  </body>
+</html>

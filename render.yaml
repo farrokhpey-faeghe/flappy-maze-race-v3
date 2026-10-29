@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: flappy-maze-race
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: COURSE_SECONDS
+        value: "90"
+      - key: DIFFICULTY_PRESET
+        value: Hard
+      - key: NODE_VERSION
+        value: 24.22.1

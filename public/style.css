@@ -1,0 +1,1127 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+:root {
+  color-scheme: dark;
+  --bg: #101425;
+  --panel: #191f32;
+  --line: #30374c;
+  --muted: #969eb5;
+  --ink: #f4f5f0;
+  --lime: #bcf575;
+  --blue: #77c6ff;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "DM Sans", system-ui, sans-serif;
+  min-height: 100dvh;
+}
+.ambient {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 35%, #233a352b, transparent 55%);
+  z-index: -1;
+}
+button,
+input,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  border: 0;
+  transition:
+    transform 0.18s,
+    background 0.18s;
+}
+button:hover {
+  transform: translateY(-2px);
+}
+button:active {
+  transform: scale(0.98);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+  transform: none;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+canvas:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 4px;
+}
+header {
+  height: 100px;
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff0d;
+}
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+.brandmark {
+  background: var(--lime);
+  color: #151b28;
+  width: 33px;
+  height: 33px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 27px;
+}
+.brandlight {
+  color: var(--muted);
+  font-weight: 400;
+}
+.headerRight {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+.connection {
+  font-size: 12px;
+  color: var(--muted);
+}
+.connection.online {
+  color: var(--lime);
+}
+.iconButton {
+  background: #ffffff08;
+  border: 1px solid var(--line);
+  padding: 9px 12px;
+  border-radius: 50px;
+  color: var(--muted);
+  font-size: 12px;
+}
+main {
+  max-width: 1300px;
+  margin: auto;
+  padding: 54px 36px 40px;
+}
+.screen {
+  animation: appear 0.35s ease;
+}
+.hidden {
+  display: none !important;
+}
+.home {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 65px;
+  align-items: center;
+}
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--lime);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow > span {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+}
+h1,
+h2,
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -2px;
+  margin: 0;
+}
+h1 {
+  font-size: clamp(52px, 5.6vw, 78px);
+  line-height: 1.04;
+  margin: 23px 0;
+}
+h1 em {
+  font-style: normal;
+  color: var(--lime);
+}
+.intro {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.featurePills {
+  display: flex;
+  gap: 13px;
+  font-size: 10px;
+  margin: 26px 0;
+  color: #c2c8d6;
+}
+.featurePills span {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+.playCard {
+  max-width: 420px;
+  padding: 23px;
+  background: #1a2032;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  box-shadow: 0 16px 40px #0002;
+}
+label,
+small {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+}
+input {
+  background: #111728;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px;
+  width: 100%;
+  margin: 9px 0 12px;
+  min-width: 0;
+}
+.primary {
+  background: var(--lime);
+  color: #182323;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  align-items: center;
+  min-height: 48px;
+}
+.primary:hover {
+  background: #d3ffa3;
+}
+.playCard > .primary {
+  width: 100%;
+}
+.secondary {
+  background: #252c41;
+  border: 1px solid #3c445a;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 8px;
+  letter-spacing: 1.3px;
+  color: #838ca4;
+  margin: 20px 0 12px;
+}
+.or span {
+  height: 1px;
+  background: var(--line);
+  flex: 1;
+}
+form {
+  display: flex;
+  gap: 9px;
+}
+form input {
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+form button {
+  font-size: 12px;
+}
+.tiny {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  margin: 15px 0 0;
+}
+.textButton {
+  background: transparent;
+  color: var(--muted);
+  padding: 14px 0;
+  font-size: 12px;
+}
+.textButton:hover {
+  color: var(--lime);
+}
+.heroArt {
+  height: 620px;
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid #3b4651;
+  overflow: visible;
+  background: #142b31;
+  box-shadow: 0 30px 80px #0003;
+}
+.heroArt canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+}
+.artLabel,
+.artBottom {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+.artLabel {
+  top: 26px;
+  justify-content: flex-start;
+  gap: 8px;
+  color: #c7ddc6;
+}
+.liveDot {
+  background: var(--lime);
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+}
+.artBottom {
+  bottom: 24px;
+  color: #9db8ad;
+}
+.floatingBadge {
+  position: absolute;
+  left: -25px;
+  bottom: 78px;
+  background: #20283bea;
+  backdrop-filter: blur(12px);
+  border: 1px solid #65746066;
+  border-radius: 12px;
+  padding: 17px 23px;
+  display: flex;
+  gap: 13px;
+  box-shadow: 0 20px 50px #0004;
+  font-size: 12px;
+}
+.floatingBadge > span {
+  font-size: 28px;
+  color: var(--lime);
+}
+.floatingBadge small {
+  display: block;
+  letter-spacing: 0;
+  font-size: 10px;
+  margin-top: 5px;
+  font-weight: 400;
+}
+footer {
+  max-width: 1300px;
+  margin: 15px auto 0;
+  padding: 25px 36px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ffffff0d;
+  color: #737d95;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+footer b {
+  color: var(--lime);
+  margin-left: 8px;
+}
+h2 {
+  font-size: 40px;
+  line-height: 1.15;
+}
+h2 span {
+  color: var(--lime);
+}
+.sectionHeading,
+.raceTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 30px;
+}
+.sectionHeading h2,
+.raceTop h2 {
+  margin-top: 12px;
+}
+.sectionHeading p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.lobbyGrid {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 24px;
+}
+.lobbyMain,
+.briefing {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px;
+}
+.roomBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.roomBanner strong {
+  display: block;
+  letter-spacing: 8px;
+  font-size: 32px;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--lime);
+  margin-top: 7px;
+}
+.pilots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 25px 0;
+}
+.pilot {
+  background: #111727;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 24px;
+  text-align: center;
+  min-height: 195px;
+}
+.avatar {
+  width: 70px;
+  height: 60px;
+  margin: 0 auto 15px;
+}
+.pilot b {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.pilot p {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+.pilot.ready {
+  border-color: var(--lime);
+}
+.pilot.ready p {
+  color: var(--lime);
+}
+.readyPanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.readyPanel p {
+  font-size: 12px;
+  color: var(--muted);
+}
+h3 {
+  font-size: 29px;
+  letter-spacing: -1px;
+  margin: 16px 0;
+}
+.briefing p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.courseMini {
+  font-size: 32px;
+  letter-spacing: 6px;
+  color: var(--lime);
+  background: #111727;
+  padding: 25px 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+dl {
+  margin: 25px 0;
+}
+dl div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+dt {
+  color: var(--muted);
+}
+dd {
+  margin: 0;
+}
+.tip {
+  background: #bcf5750b;
+  padding: 15px;
+  border-radius: 8px;
+}
+.timer {
+  font-family: "Space Grotesk", monospace;
+  font-size: 30px;
+  color: var(--lime);
+}
+.progressGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+.progressItem {
+  background: var(--panel);
+  padding: 17px 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+.progressTrack {
+  height: 5px;
+  background: #ffffff10;
+  border-radius: 20px;
+  margin-top: 13px;
+  overflow: hidden;
+}
+.progressFill {
+  height: 100%;
+  background: var(--lime);
+  transition: width 0.1s linear;
+}
+.progressItem.opponent .progressFill {
+  background: var(--blue);
+}
+.arena {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #41575a;
+  border-radius: 16px;
+  background: #152b31;
+  touch-action: none;
+}
+.arena canvas {
+  display: block;
+  width: 100%;
+  height: 500px;
+  touch-action: none;
+}
+.arenaHint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 22px;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(transparent, #10252bea);
+  font-size: 9px;
+  letter-spacing: 1px;
+  pointer-events: none;
+  color: #a3b7b8;
+}
+.arenaHint b {
+  color: var(--lime);
+  margin-left: 7px;
+}
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #10142577;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 100px;
+  font-weight: 700;
+  color: var(--lime);
+  pointer-events: none;
+  text-shadow: 0 0 70px #bcf57588;
+}
+.recovery {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #273142e8;
+  border: 1px solid #ffb294;
+  color: #ffd3a6;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.raceFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+}
+.resultsCard {
+  max-width: 620px;
+  margin: 20px auto;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 44px;
+}
+.resultsCard .eyebrow {
+  justify-content: center;
+}
+.trophy {
+  font-size: 80px;
+  color: var(--lime);
+  margin: 20px;
+  text-shadow: 0 0 50px #bcf57555;
+  animation: float 3s ease-in-out infinite;
+}
+.resultsCard h2 {
+  overflow-wrap: anywhere;
+}
+.resultsCard > p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.resultsCard > .primary {
+  width: 100%;
+  margin-top: 25px;
+}
+.resultRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+  gap: 10px;
+  font-size: 13px;
+}
+.resultRow span:last-child {
+  color: var(--lime);
+  white-space: nowrap;
+}
+dialog {
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  max-width: 520px;
+  width: calc(100% - 30px);
+  padding: 35px;
+}
+dialog::backdrop {
+  background: #080d1bca;
+  backdrop-filter: blur(7px);
+}
+dialog h2 {
+  margin: 18px 0;
+}
+dialog ol {
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+dialog li {
+  margin: 15px 0;
+}
+dialog b {
+  color: var(--ink);
+}
+dialog .primary {
+  width: 100%;
+}
+.dialogClose {
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 28px;
+}
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 24px;
+  max-width: 90%;
+  border: 1px solid #61754e;
+  background: #26352b;
+  color: var(--ink);
+  border-radius: 12px;
+  font-size: 13px;
+  z-index: 10;
+  box-shadow: 0 10px 40px #0005;
+}
+.toast.error {
+  background: #442a35;
+  border-color: #ad5a70;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@media (min-width: 1500px) {
+  main {
+    padding-top: 70px;
+  }
+}
+@media (max-width: 1000px) {
+  .home {
+    gap: 30px;
+  }
+  .heroArt {
+    height: 580px;
+  }
+  .featurePills {
+    gap: 5px;
+  }
+  .featurePills span {
+    padding: 7px;
+    font-size: 9px;
+  }
+  h1 {
+    font-size: 60px;
+  }
+  .lobbyGrid {
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .lobbyMain,
+  .briefing {
+    padding: 20px;
+  }
+}
+@media (max-width: 740px) {
+  header {
+    height: 74px;
+    padding: 0 20px;
+  }
+  .brand {
+    font-size: 12px;
+    gap: 6px;
+  }
+  .brandlight {
+    display: none;
+  }
+  .headerRight {
+    gap: 10px;
+  }
+  .connection {
+    font-size: 10px;
+  }
+  main {
+    padding: 30px 20px;
+  }
+  .home {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  h1 {
+    font-size: 58px;
+  }
+  .intro {
+    font-size: 15px;
+  }
+  .heroCopy > .eyebrow {
+    font-size: 9px;
+  }
+  .featurePills {
+    gap: 8px;
+  }
+  .featurePills span {
+    font-size: 10px;
+  }
+  .playCard {
+    max-width: none;
+  }
+  .heroArt {
+    height: 350px;
+    margin: 10px 0;
+  }
+  .floatingBadge {
+    left: 12px;
+    bottom: 65px;
+    padding: 12px 16px;
+  }
+  .artBottom {
+    font-size: 7px;
+  }
+  .lobbyGrid {
+    grid-template-columns: 1fr;
+  }
+  .sectionHeading {
+    gap: 15px;
+    align-items: flex-start;
+  }
+  h2 {
+    font-size: 29px;
+    letter-spacing: -1.3px;
+  }
+  .sectionHeading .secondary {
+    padding: 10px;
+    font-size: 11px;
+  }
+  .roomBanner strong {
+    font-size: 26px;
+    letter-spacing: 5px;
+  }
+  .roomBanner .primary {
+    font-size: 11px;
+    padding: 12px;
+    gap: 5px;
+  }
+  .pilots {
+    gap: 10px;
+  }
+  .pilot {
+    padding: 18px 10px;
+  }
+  .readyPanel {
+    align-items: flex-start;
+  }
+  .readyPanel .primary {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  .briefing {
+    display: none;
+  }
+  .raceTop {
+    gap: 15px;
+    margin-top: 0;
+  }
+  .raceTop h2 {
+    font-size: 23px;
+  }
+  .raceTop .eyebrow {
+    font-size: 8px;
+  }
+  .timer {
+    font-size: 23px;
+    white-space: nowrap;
+  }
+  .progressGrid {
+    gap: 9px;
+  }
+  .progressItem {
+    padding: 12px;
+  }
+  .progressLabel {
+    font-size: 10px;
+    gap: 3px;
+    flex-wrap: wrap;
+  }
+  .arena canvas {
+    height: 460px;
+  }
+  .arenaHint {
+    padding: 14px 10px;
+    font-size: 7px;
+  }
+  .arenaHint b {
+    margin-left: 3px;
+  }
+  .raceFoot {
+    font-size: 9px;
+  }
+  .raceFoot > span {
+    max-width: 70%;
+  }
+  footer {
+    padding: 20px;
+    gap: 10px;
+    font-size: 8px;
+  }
+  footer > span:last-child {
+    display: none;
+  }
+  .resultsCard {
+    padding: 28px 22px;
+  }
+  .recovery {
+    font-size: 10px;
+    padding: 12px;
+  }
+  .desktop {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.renameForm {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.renameForm label {
+  white-space: nowrap;
+  font-size: 8px;
+}
+.renameForm input {
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.renameForm button {
+  font-size: 10px;
+}
+#results {
+  position: relative;
+}
+#celebration {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+@media (max-width: 740px) {
+  .renameForm {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .renameForm label {
+    width: 100%;
+  }
+  .renameForm input {
+    flex: 1;
+  }
+}
+/* v2: keep the original arcade language while scaling the room and race HUD. */
+select {
+  width: 100%;
+  margin: 9px 0 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #111728;
+  color: var(--ink);
+  font: inherit;
+  min-height: 46px;
+}
+.lobbyGrid {
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+}
+.lobbyMeta,
+.raceMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.lobbyMeta {
+  margin-top: 15px;
+}
+.raceMeta {
+  margin-bottom: 18px;
+}
+.raceMeta #intensity {
+  color: var(--lime);
+  background: #bcf57512;
+  border: 1px solid #bcf57533;
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+.pilots {
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.pilot {
+  min-height: 155px;
+  padding: 16px 10px;
+}
+.avatar {
+  height: 45px;
+  width: 65px;
+  margin-bottom: 10px;
+}
+.pilot.ready {
+  border-color: var(--pilot);
+}
+.pilot.ready p {
+  color: var(--pilot);
+}
+.readyPanel {
+  align-items: flex-start;
+}
+.readyActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.readyPanel p {
+  line-height: 1.6;
+  max-width: 52%;
+  margin: 5px 0;
+}
+.progressGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+}
+.progressItem {
+  padding: 10px 12px;
+  border-left: 3px solid var(--pilot);
+}
+.progressItem.local {
+  background: #26352b;
+  border-color: var(--pilot);
+}
+.progressLabel {
+  font-size: 11px;
+}
+.progressLabel span {
+  overflow-wrap: anywhere;
+}
+.progressFill,
+.progressItem.opponent .progressFill {
+  background: var(--pilot);
+}
+.progressTrack {
+  margin-top: 8px;
+  height: 4px;
+}
+.arena {
+  border-color: #7c9d72;
+}
+.arena canvas {
+  height: 480px;
+}
+#openLobby {
+  margin-top: 16px;
+  width: 100%;
+}
+.briefing p {
+  color: #bdc7cd;
+}
+.heroArt {
+  background: #244339;
+}
+@media (max-width: 740px) {
+  .lobbyGrid {
+    grid-template-columns: 1fr;
+  }
+  .readyPanel {
+    flex-direction: column;
+  }
+  .readyPanel p {
+    max-width: 100%;
+  }
+  .readyActions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .readyActions button {
+    flex: 1;
+  }
+  .pilots {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  .pilot {
+    min-height: 140px;
+  }
+  .progressGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .progressLabel {
+    font-size: 9px;
+  }
+  .progressItem {
+    padding: 8px;
+  }
+  .arena canvas {
+    height: min(54dvh, 460px);
+    min-height: 280px;
+  }
+  .raceMeta {
+    font-size: 9px;
+  }
+  .raceMeta span:last-child {
+    display: none;
+  }
+  .roomBanner {
+    gap: 8px;
+  }
+  .roomBanner strong {
+    letter-spacing: 3px;
+    font-size: 24px;
+  }
+}
+/* V3 motion legend: preserve the existing bright arcade palette. */
+.motionLegend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  color: #ffd087;
+  margin: 14px 0;
+  line-height: 1.6;
+}
+.motionLegend span {
+  border: 1px solid #ffd08744;
+  background: #ffd0870a;
+  border-radius: 6px;
+  padding: 5px 8px;
+}

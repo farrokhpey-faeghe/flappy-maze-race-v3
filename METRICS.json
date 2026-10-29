@@ -1,0 +1,72 @@
+{
+  "defaultSeed1": {
+    "seed": 1,
+    "preset": "Hard",
+    "durationSeconds": 90,
+    "obstacles": 49,
+    "movingObstacles": 27,
+    "pulsingObstacles": 5,
+    "movingTunnels": 2,
+    "oppositePairs": 4,
+    "lateMovingShare": 0.7368421052631579,
+    "lateDynamicShare": 0.8421052631578947,
+    "movingFrequencyRadPerSec": {
+      "min": 1.284621372808516,
+      "max": 2.5662596321234443
+    },
+    "movingAmplitudeUnits": {
+      "min": 28.29588888424821,
+      "max": 54.32945843737886
+    },
+    "maximumVerticalGateSpeedUnitsPerSec": {
+      "min": 36.34950362332017,
+      "max": 135.58896002524676
+    },
+    "centerToCenterSpacingUnits": {
+      "min": 189.7902213400448,
+      "max": 368.1111152336143
+    },
+    "freeEdgeSpacingUnits": {
+      "min": 99.4293210432248,
+      "max": 320.0000000000004
+    },
+    "staticGapUnits": {
+      "min": 139.15759467208545,
+      "max": 220.6908677538664
+    },
+    "movingGapUnits": {
+      "min": 173.4304886669251,
+      "max": 228.96877038027048
+    },
+    "minimumPulsedGapUnits": 116.71559626418542,
+    "checkpoints": 5
+  },
+  "seeds0Through99": {
+    "obstacleCount": {
+      "min": 49,
+      "max": 49
+    },
+    "movingCount": {
+      "min": 27,
+      "max": 27
+    },
+    "frequencyRadPerSec": {
+      "min": 1.2071613128316754,
+      "max": 2.7456127402485344
+    },
+    "amplitudeUnits": {
+      "min": 28.29588888424821,
+      "max": 54.32945843737886
+    },
+    "peakVerticalSpeedUnitsPerSec": {
+      "min": 34.15770237324828,
+      "max": 149.16765325647063
+    },
+    "legacyCenterFollowingControllerFailures": 73
+  },
+  "notes": [
+    "Spacing includes deliberately longer checkpoint recovery stretches.",
+    "Peak vertical speed = amplitude × angular frequency; motion remains sinusoidal.",
+    "Controller failures are an algorithmic baseline, not a human difficulty score."
+  ]
+}
