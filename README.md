@@ -1,21 +1,25 @@
-# Flappy Maze Race V3
+# Flappy Maze Race
 
-**Faster gates. Denser mazes. Small wings.** V3 upgrades the existing V2 game with a significantly more active, continuous obstacle challenge while retaining the original 2–8-player rooms, canvas characters, interface, controls, checkpoints, and server-authoritative race rules.
+**Small wings. Big rivalry.**
 
-V2 is preserved separately. This package is the V3 application, not a replacement architecture or simulated multiplayer demo.
+Challenge your friends to a real-time flying race through a glowing neon maze. Flappy Maze Race brings 2–8 players together for a fast-paced competition where every flap counts. Dodge moving gates, navigate tighter passages, and recover at checkpoints as the course grows more demanding. Share a room, ready up, and race to be the first across the finish line.
+
+**[Play Flappy Maze Race online](https://flappy-maze-race-v3.onrender.com/)** — no account or installation required.
+
+![Flappy Maze Race — real-time multiplayer maze racing for 2–8 players](assets/flappy-maze-race-cover.png)
 
 ## Start and play
 
 Requires Node.js 22+; tested on 24.22.1.
 
-```bash
+```
 npm ci
 npm start
 ```
 
-Open **http://localhost:3000**. If V2 is already running there, use:
+Open [**http://localhost:3000**](http://localhost:3000). If V2 is already running there, use:
 
-```bash
+```
 PORT=3001 npm start
 ```
 
@@ -30,7 +34,7 @@ PORT=3001 npm start
 
 Use independent browser profiles/private windows or independently opened tabs for local testing. Duplicating a room tab can copy its session token; duplicate pilot sessions are intentionally rejected.
 
-**Localhost is only the server computer.** For different networks, deploy this Node application and share its real HTTPS URL. Players need no account, login, install, or development tools. This package itself is not a public deployment.
+**Localhost is only the server computer.** To play with friends on different networks, use the [online game](https://flappy-maze-race-v3.onrender.com/) and share an invitation link created there. Players need no account, login, installation, or development tools.
 
 ## What makes V3 harder
 
@@ -46,24 +50,24 @@ Use independent browser profiles/private windows or independently opened tabs fo
 
 `METRICS.json` contains reproducible exact measurements. Run `npm run measure` to regenerate the report after tuning.
 
-| Measurement | Default Hard, 90 seconds |
-| --- | --- |
-| Total / vertically moving obstacles | **49 / 27** on each seed 0–99 |
-| Moving angular frequency, seeds 0–99 | **1.207–2.746 rad/s** |
-| Moving amplitude | **28.30–54.33 world units** |
-| Peak vertical gate speed, amplitude × frequency | **34.16–149.17 units/s**, across those seeds |
-| Center-to-center spacing | **189.79–368.11 units**, including checkpoint stretches |
-| Clear distance from one obstacle's end to the next start | **99.43–320 units** |
-| Plain stationary gaps | **139.16–220.69 units** |
-| Moving gaps | **173.43–228.97 units** |
-| Tightest possible pulsing opening | **116.72 units** |
-| Checkpoints, including start | **5** |
+| Measurement                                              | Default Hard, 90 seconds                                |
+| -------------------------------------------------------- | ------------------------------------------------------- |
+| Total / vertically moving obstacles                      | **49 / 27** on each seed 0–99                           |
+| Moving angular frequency, seeds 0–99                     | **1.207–2.746 rad/s**                                   |
+| Moving amplitude                                         | **28.30–54.33 world units**                             |
+| Peak vertical gate speed, amplitude × frequency          | **34.16–149.17 units/s**, across those seeds            |
+| Center-to-center spacing                                 | **189.79–368.11 units**, including checkpoint stretches |
+| Clear distance from one obstacle's end to the next start | **99.43–320 units**                                     |
+| Plain stationary gaps                                    | **139.16–220.69 units**                                 |
+| Moving gaps                                              | **173.43–228.97 units**                                 |
+| Tightest possible pulsing opening                        | **116.72 units**                                        |
+| Checkpoints, including start                             | **5**                                                   |
 
 A moving gap's whole motion envelope is not the usable opening at a particular moment. For late fast gates, simply hovering in a constant central band is no longer enough for all phases. The old V2 center-following controller failed 73/100 default V3 courses, while the new legal trajectory planner completed them. That is an algorithmic comparison, **not a human difficulty score or a promise that every strategy works**.
 
 ## Difficulty configuration
 
-```bash
+```
 COURSE_SECONDS=120 npm start
 DIFFICULTY_PRESET=Normal npm start
 DIFFICULTY_PRESET=Expert COURSE_SECONDS=90 npm start
@@ -77,7 +81,7 @@ The default is **Hard**; no pre-race difficulty selection is added to the player
 
 Example server configuration:
 
-```js
+```
 course: {
   preset: 'Hard',
   durationSeconds: Number(process.env.COURSE_SECONDS || 90),
@@ -89,23 +93,23 @@ course: {
 
 Do not change a preset's values only in its flattened copy inside DEFAULTS: preset geometry is reapplied by `generateCourse`. Edit PRESETS or supply explicit overrides in config.js.
 
-| Setting | Hard/default value | Meaning |
-| --- | --- | --- |
-| `durationSeconds` | 90 | Clean race duration; supported range 30–240 seconds |
-| `density` | 1 | Multiplier dividing obstacle intervals; validated range 0.5–1.5 |
-| `earlySpacing`, `finalSpacing` | 320, 185 | Center spacing targets before clear checkpoint stretches |
-| `earlyGap`, `finalGap` | 226, 126 | Stationary gap targets; pulsing openings shrink by a separately bounded amount |
-| `earlyMovingGap`, `finalMovingGap` | 236, 172 | Moving gaps remain larger to accommodate faster passage |
-| `earlyMovingProbability`, `lateMovingProbability` | .24, .76 | Thresholds used by a deterministic low-discrepancy moving-gate schedule |
-| `earlyFrequency`, `lateFrequency` | 1.1, 2.65 | Angular frequency targets, rad/s |
-| `earlyAmplitude`, `lateAmplitude` | 25, 55 | Vertical motion amplitude targets |
-| `motionVariation` | .1 | Seeded frequency variation of ±5%; intentional paired gates share frequency |
-| `progressionExponent` | .9 | Continuous curve: distance fraction raised to this power |
-| `maxDifficulty` | 1 | Multiplier/cap on progression intensity, range 0–1 |
-| `checkpointEvery` | 10 | Obstacles per recovery stretch |
-| `checkpointApproach` | 230 | Clear distance before the next obstacle after a checkpoint |
-| `checkpointClearance` | 90 | Checkpoint offset after the previous obstacle's end |
-| `firstObstacle`, `finishRunout` | 600, 300 | Introductory approach and final clear stretch |
+| Setting                                           | Hard/default value | Meaning                                                                        |
+| ------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------ |
+| `durationSeconds`                                 | 90                 | Clean race duration; supported range 30–240 seconds                            |
+| `density`                                         | 1                  | Multiplier dividing obstacle intervals; validated range 0.5–1.5                |
+| `earlySpacing`, `finalSpacing`                    | 320, 185           | Center spacing targets before clear checkpoint stretches                       |
+| `earlyGap`, `finalGap`                            | 226, 126           | Stationary gap targets; pulsing openings shrink by a separately bounded amount |
+| `earlyMovingGap`, `finalMovingGap`                | 236, 172           | Moving gaps remain larger to accommodate faster passage                        |
+| `earlyMovingProbability`, `lateMovingProbability` | .24, .76           | Thresholds used by a deterministic low-discrepancy moving-gate schedule        |
+| `earlyFrequency`, `lateFrequency`                 | 1.1, 2.65          | Angular frequency targets, rad/s                                               |
+| `earlyAmplitude`, `lateAmplitude`                 | 25, 55             | Vertical motion amplitude targets                                              |
+| `motionVariation`                                 | .1                 | Seeded frequency variation of ±5%; intentional paired gates share frequency    |
+| `progressionExponent`                             | .9                 | Continuous curve: distance fraction raised to this power                       |
+| `maxDifficulty`                                   | 1                  | Multiplier/cap on progression intensity, range 0–1                             |
+| `checkpointEvery`                                 | 10                 | Obstacles per recovery stretch                                                 |
+| `checkpointApproach`                              | 230                | Clear distance before the next obstacle after a checkpoint                     |
+| `checkpointClearance`                             | 90                 | Checkpoint offset after the previous obstacle's end                            |
+| `firstObstacle`, `finishRunout`                   | 600, 300           | Introductory approach and final clear stretch                                  |
 
 Frequency, amplitude, gap, spacing, and center variation change continuously with world position. New pattern introductions are staggered; the race never pauses or changes to a separate level. Threshold probabilities are converted to a repeatable schedule so small random samples do not accidentally produce an almost-static course.
 
@@ -125,17 +129,17 @@ Trajectory search runs in **Node worker threads**, two at a time with a bounded 
 
 ## Architecture and preserved multiplayer
 
-| File | Role |
-| --- | --- |
-| `public/engine.js` | Shared deterministic generator, motion, physics, collisions, recovery, palette |
-| `config.js` | Server defaults and duration/preset environment variables |
-| `game.js` | Course creation and replay-validated seed selection |
-| `planner.js` | Legal trajectory search and exact physics replay; not a player bot |
-| `course-worker.js`, `course-validator.js` | Bounded asynchronous validation work |
-| `server.js` | Existing Express/Socket.IO rooms, host start, 60 Hz simulation, ~20 Hz snapshots, results and reconnects |
-| `public/app.js`, HTML/CSS | Original UI with dynamic colors, motion rails, directional cues, trails and group HUD |
-| `test/` | Difficulty/physics, independent network clients, frontend code harness, startup and worker checks |
-| `scripts/measure.js`, `METRICS.json` | Reproducible density/motion measurements |
+| File                                      | Role                                                                                                      |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `public/engine.js`                        | Shared deterministic generator, motion, physics, collisions, recovery, palette                            |
+| `config.js`                               | Server defaults and duration/preset environment variables                                                 |
+| `game.js`                                 | Course creation and replay-validated seed selection                                                       |
+| `planner.js`                              | Legal trajectory search and exact physics replay; not a player bot                                        |
+| `course-worker.js`, `course-validator.js` | Bounded asynchronous validation work                                                                      |
+| `server.js`                               | Existing Express/Socket.IO rooms, host start, 60 Hz simulation, \~20 Hz snapshots, results and reconnects |
+| `public/app.js`, HTML/CSS                 | Original UI with dynamic colors, motion rails, directional cues, trails and group HUD                     |
+| `test/`                                   | Difficulty/physics, independent network clients, frontend code harness, startup and worker checks         |
+| `scripts/measure.js`, `METRICS.json`      | Reproducible density/motion measurements                                                                  |
 
 Server changes are limited to asynchronous course creation/validation, preventing stale asynchronous starts, and version metadata. The existing room protocol, flight rules, and single Node deployment remain intact.
 
