@@ -6,7 +6,7 @@ Challenge your friends to a real-time flying race through a glowing neon maze. F
 
 **[Play Flappy Maze Race online](https://flappy-maze-race-v3.onrender.com/)** — no account or installation required.
 
-![Flappy Maze Race — real-time multiplayer maze racing for 2–8 players](assets/flappy-maze-race-cover.png)
+![flappy-maze-race-v3](flappy-maze-race-cover.png)
 
 ## Start and play
 
